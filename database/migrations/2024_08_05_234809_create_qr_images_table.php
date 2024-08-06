@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('qr_images', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->integer('tipe')->comment('0:administrador, 1:usuario');
+            $table->string('description', 250);
+            $table->date('valid_from');
+            $table->date('expired');
+            $table->string('image');
+            $table->decimal('amount', 10, 2)->nullable();
             $table->boolean('status')->default(1);
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('qr_images');
     }
 };

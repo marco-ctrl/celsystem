@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,25 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            /**
+             * ====================================================
+             *   CARGA DINÁMICA de todas las ROUTES establecidas
+             * para cada Entidad comprendida en cada Bundle Context
+             * ====================================================
+             */
+            $boundedContexts = ['admin', 'manager', 'app', 'landing'];
+            foreach ($boundedContexts as $boundedContext) {
+                if (is_dir(base_path("src/$boundedContext"))) {
+                    foreach (File::allFiles(base_path("src/$boundedContext/**/infrastructure/routes")) as $routeFile) {
+                        $type = explode(".", $routeFile->getBasename())[0];
+                        Route::prefix($type)
+                            ->middleware($type)
+                            ->group($routeFile->getRealPath());
+                    }
+                }
+            }
+            // ====================================================
         });
     }
 }
