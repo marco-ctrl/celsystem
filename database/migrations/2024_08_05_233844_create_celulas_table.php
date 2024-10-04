@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('celulas', function (Blueprint $table) {
             $table->id();
-            $table->integer('number');
+            $table->integer('number')->unique();
             $table->string('addres');
             $table->integer('day');
             $table->time('hour');

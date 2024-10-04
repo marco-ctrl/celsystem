@@ -13,6 +13,7 @@ class Celula extends Model
 
     protected $fillable = [
         'number',
+        'name',
         'addres',
         'day',
         'hour',

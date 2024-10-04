@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -74,7 +75,9 @@ class AuthController extends Controller
     {
         try {
             //Aquí se busca el usuario por email
-            $user = User::where('email', $request->email)->first();
+            $user = User::with('lider')
+                ->where('email', $request->email)
+                ->first();
 
             //Se Verifica si el usuario existe y la contraseña es correcta
             if (!$user || !Hash::check($request->password, $user->password)) {
@@ -124,6 +127,40 @@ class AuthController extends Controller
                 'status' => false,
                 'message' => __('Failed to logout user'),
                 'error' => $ex->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function checkToken(Request $request): JsonResponse
+    {
+        try {
+
+            $user = User::with('lider')
+            ->find(auth()->id());
+            
+            $authorizationHeader = $request->header('Authorization');
+
+            if ($authorizationHeader && strpos($authorizationHeader, 'Bearer ') === 0) {
+                $token = substr($authorizationHeader, 7);
+
+            } else {
+                return response()->json([
+                    'error' => 'Token not provided or invalid format',
+                    'status' => false
+                ], 400);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Token is valid',
+                'token' => $token,
+                'user' => $user
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => 'error check token',
+                'error' => $th->getMessage(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

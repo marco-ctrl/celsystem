@@ -1,19 +1,22 @@
 <?php
 
-// use Src\admin\celula\infrastructure\controllers\ExampleGETController;
+use Illuminate\Support\Facades\Route;
+use Src\admin\celula\infrastructure\controllers\BajaCelulaDELETEController;
+use Src\admin\celula\infrastructure\controllers\ListAllCelulasGETController;
+use Src\admin\celula\infrastructure\controllers\ListAllMapsCelulasGETController;
+use Src\admin\celula\infrastructure\controllers\ShowCelulaGETController;
+use Src\admin\celula\infrastructure\controllers\StoreCelulaPOSTController;
+use Src\admin\celula\infrastructure\controllers\UpdateCelulaPUTController;
 
-// Route::prefix('admin_celula')->group(function () {
-//     // Simple route example
-//     // Route::get('/', [ExampleGETController::class, 'index']);
-
-//     // Authenticated route example
-//     // Route::middleware(['auth:sanctum'])->get('/', [ExampleGETController::class, 'index']);
-
-//     // Group example for Authenticated routes
-//     // Route::group([
-//     //     'middleware' => 'auth:sanctum',
-//     // ], function () {
-//     //     Route::get('/', [ExampleGETController::class, 'index']);
-//     //     // add as many authenticated routes as necessary
-//     // });
-// });
+Route::prefix('admin_celula')->group(function () {
+    Route::group([
+        'middleware' => 'auth:sanctum',
+    ], function () {
+        Route::get('/', [ListAllCelulasGETController::class, 'index']);
+        Route::post('/', [StoreCelulaPOSTController::class, 'index']);
+        Route::get('/{celula}', [ShowCelulaGETController::class, 'index']);
+        Route::put('/{celula}', [UpdateCelulaPUTController::class, 'index']);
+        Route::delete('/{celula}', [BajaCelulaDELETEController::class, 'index']);
+        Route::get('/map/celula', [ListAllMapsCelulasGETController::class, 'index']);
+    });
+});

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'loginUser']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    $usuario = User::with('lider')->find($request->user()->id);
-    return $usuario;
+Route::group(['middleware' => 'auth:sanctum',], function () {
+    Route::get('/logout', [AuthController::class, 'logoutUser']);
+    Route::get('/check-token', [AuthController::class, 'checkToken']);
 });

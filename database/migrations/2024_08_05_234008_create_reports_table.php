@@ -19,8 +19,7 @@ return new class extends Migration
             $table->decimal('offering', 10, 7);
             $table->integer('payment_method')->comment('0:efectivo, 1:qr');
             $table->string('voucher')->nullable();
-            $table->string('assistant');
-            $table->string('visit');
+            $table->string('photo')->nullable();
             $table->unsignedBigInteger('celula_id');
             $table->foreign('celula_id')->references('id')->on('celulas')->onDelete('cascade');
             $table->boolean('status')->default(1);
