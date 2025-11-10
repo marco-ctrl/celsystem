@@ -21,7 +21,7 @@ class StoreInformeRequest extends FormRequest
     {
         return [
             'asistencia' => 'required|array',
-            'asistencia.*.id' => 'nullable|integer',
+            'asistencia.*.id' => 'nullable',
             'asistencia.*.name' => 'required|string|max:50',
             'asistencia.*.lastname' => 'required|string|max:50',
             'asistencia.*.contact' => 'nullable|string|max:11',
@@ -31,10 +31,13 @@ class StoreInformeRequest extends FormRequest
             
             'celula_id' => 'required|integer',
             'offering' => 'required|numeric|min:0',
+            'payment_method' => 'required|in:0,1',
             'photo' => 'required|file|image|max:1024',
+            'voucher' => 'nullable|file|image|max:1024',
+            'addres' => 'required|max:250',
             
             'visita' => 'required|array',
-            'visita.*.id' => 'nullable|integer',
+            'visita.*.id' => 'nullable',
             'visita.*.name' => 'required|string|max:50',
             'visita.*.lastname' => 'required|string|max:50',
             'visita.*.contact' => 'nullable|string|max:11',

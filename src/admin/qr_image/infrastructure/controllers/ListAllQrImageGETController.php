@@ -15,7 +15,11 @@ final class ListAllQrImageGETController extends Controller
         try {
             $term = $request->term;
 
-            $qrImages = QrImage::all();
+            $qrImages = QrImage::when($term, function ($query, $term) {
+                $query->where('description', 'LIKE', '%' . $term . '%');
+            })
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
 
             return response()->json([
                 'status' => true,

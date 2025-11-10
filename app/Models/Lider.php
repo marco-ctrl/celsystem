@@ -20,7 +20,7 @@ class Lider extends Model
         'foto',
         'user_id',
         'status',
-
+        'code',
     ];
 
     protected $hidden = [

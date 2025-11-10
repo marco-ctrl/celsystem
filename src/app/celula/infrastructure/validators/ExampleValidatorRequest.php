@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\admin\weekly_lesson\infrastructure\validators;
+namespace Src\app\celula\infrastructure\validators;
 
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -23,6 +23,7 @@ final class StoreCelulaPOSTController extends Controller
                 'latitude' => $request->latitude,
                 'length' => $request->length,
                 'lider_id' => $request->lider_id,
+                'tipe' => $request->tipe,
             ];
 
             $celula = new Celula($data);

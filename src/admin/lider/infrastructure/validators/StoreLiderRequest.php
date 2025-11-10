@@ -18,7 +18,8 @@ class StoreLiderRequest extends FormRequest
             'lastname' => 'required|max:50',
             'birthdate' => 'required|date',
             'addres' => 'required|max:150',
-            'contact' => 'required|max:11',
+            'code' => 'in:+54,+591',
+            'contact' => 'required|max:15',
             'foto' => 'nullable',
             'email' => 'required|email|unique:users,email'
         ];

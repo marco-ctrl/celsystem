@@ -20,6 +20,7 @@ class Celula extends Model
         'latitude',
         'length',
         'lider_id',
+        'tipe',
         'status',
     ];
 

@@ -22,6 +22,7 @@ final class UpdateCelulaPUTController extends Controller
                 'latitude' => $request->latitude,
                 'length' => $request->length,
                 'lider_id' => $request->lider_id,
+                'tipe' => $request->tipe,
             ];
 
             $celula->update($data);

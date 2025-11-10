@@ -53,7 +53,12 @@ final class UpdateReportPUTController extends Controller
                 'visit_amount' => 0,
                 'payment_method' => 0,
                 'voucher' => null,
+                'celula' => mb_strtoupper($request->input('celula'), 'UTF-8'),
+                'lider' => mb_strtoupper($request->input('lider'), 'UTF-8'),
+                'latitude' => $request->input('latitude'),
+                'length' => $request->input('length'),
                 'status' => 1,
+                'address' => mb_strtoupper($request->input('addres'), 'UTF-8'),
             ]);
 
             $report->save();

@@ -13,7 +13,10 @@ final class ListAllLessonGETController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            $lessons = WeeklyLesson::orderBy('id', 'desc')->paginate(10);
+            $lessons = WeeklyLesson::where('tema', 'LIKE', '%' . $request->term . '%')
+            ->orWhere('description', 'LIKE', '%' . $request->term . '%')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
 
             return response()->json([
                 'status' => true,

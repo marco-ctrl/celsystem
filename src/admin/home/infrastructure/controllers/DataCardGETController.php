@@ -25,10 +25,10 @@ final class DataCardGETController extends Controller
             ->count();
 
             $data = [
-                ['color' => 'blue', 'length' => $celulas, 'title' => 'Cantidad de Celulas:', 'icon' => 'home'],
-                ['color' => 'green', 'length' => $lideres, 'title' => 'Cantidad de Lideres:', 'icon' => 'person'],
-                ['color' => 'yellow', 'length' => $asistentes, 'title' => 'Cantidad de Asistentes', 'icon' => 'group'],
-                ['color' => 'red', 'length' => $visitas, 'title' => 'Cantidad de Visitas', 'icon' => 'group'],
+                ['color' => 'blue', 'length' => $celulas, 'title' => 'Celulas:', 'icon' => 'home'],
+                ['color' => 'green', 'length' => $lideres, 'title' => 'Lideres:', 'icon' => 'person'],
+                ['color' => 'yellow', 'length' => $asistentes, 'title' => 'Asistentes', 'icon' => 'group'],
+                ['color' => 'red', 'length' => $visitas, 'title' => 'Visitas', 'icon' => 'group'],
             ];
 
             return response()->json([

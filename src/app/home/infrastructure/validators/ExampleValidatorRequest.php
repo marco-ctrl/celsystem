@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\admin\qr_image\infrastructure\validators;
+namespace Src\app\home\infrastructure\validators;
 
 use Illuminate\Foundation\Http\FormRequest;
 

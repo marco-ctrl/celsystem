@@ -12,4 +12,17 @@ class QrImage extends Model
     protected $guard = [
         'id',
     ];
+
+    protected $fillable = [
+        'description',
+        'valid_from',
+        'expired',
+        'image',
+        'amount',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

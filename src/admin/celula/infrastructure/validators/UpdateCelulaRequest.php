@@ -23,6 +23,7 @@ class UpdateCelulaRequest extends FormRequest
             'latitude' => 'required|numeric',
             'length' => 'required|numeric',
             'lider_id' => "required|exists:liders,id|unique:celulas,lider_id,{$celula->id},id",
+            'tipe' => 'required|in:1,2,3'
         ];
     }
 }

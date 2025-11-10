@@ -23,6 +23,11 @@ return new class extends Migration
             $table->unsignedBigInteger('celula_id');
             $table->foreign('celula_id')->references('id')->on('celulas')->onDelete('cascade');
             $table->boolean('status')->default(1);
+            $table->string('name_celula', 50)->nullable();
+            $table->string('address', 250)->nullable();
+            $table->string('lider', 150)->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('length', 10, 7)->nullable();
             $table->timestamps();
         });
     }
