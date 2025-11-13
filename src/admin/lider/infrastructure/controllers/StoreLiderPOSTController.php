@@ -45,15 +45,25 @@ final class StoreLiderPOSTController extends Controller
             }
 
             $foto = null;
+
             if ($request->foto) {
-                // Decodifica la imagen base64 y guarda el archivo
+                // Decodifica la imagen base64
                 $imageData = $request->foto;
+
                 list($type, $imageData) = explode(';', $imageData);
-                list(, $imageData)      = explode(',', $imageData);
+                list(, $imageData) = explode(',', $imageData);
+
                 $imageData = base64_decode($imageData);
-                $imagePath = 'images/' . uniqid() . '.png'; // Puedes ajustar el nombre y formato del archivo
-                Storage::disk('public')->put($imagePath, $imageData);
-                $foto = $imagePath;
+
+                // Ruta física en /public/images
+                $fileName = uniqid() . '.png';
+                $imagePath = public_path('images/perfil/' . $fileName);
+
+                // Guarda la imagen directamente en public/
+                file_put_contents($imagePath, $imageData);
+
+                // Guarda la ruta relativa que usarás en la BD
+                $foto = 'images/perfil/' . $fileName;
             }
 
             $lider = Lider::create([
@@ -161,7 +171,4 @@ final class StoreLiderPOSTController extends Controller
 
         return implode('', $passwordChars);
     }
-
-
 }
-

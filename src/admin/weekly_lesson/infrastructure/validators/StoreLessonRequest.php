@@ -14,7 +14,7 @@ class StoreLessonRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|mimes:pdf|max:10240',
+            'file' => 'required|mimes:pdf|max:40240',
             'tema' => 'required|string|min:3|max:225',
             'description' => 'required|string|min:3|max:225',
         ];

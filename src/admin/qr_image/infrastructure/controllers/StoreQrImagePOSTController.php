@@ -13,7 +13,29 @@ final class StoreQrImagePOSTController
     public function index(StoreQrImageRequest $request): JsonResponse
     {
         try {
-            $path = $request->file('image')->store('qr_images', 'public');
+            if ($request->hasFile('image')) {
+
+                $file = $request->file('image');
+
+                // Carpeta dentro de /public
+                $folder = 'images/qr_images';
+
+                // Crear carpeta si no existe
+                if (!file_exists(public_path($folder))) {
+                    mkdir(public_path($folder), 0775, true);
+                }
+
+                // Nombre único manteniendo la extensión
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                // Guardar el archivo físicamente en /public/qr_images
+                $file->move(public_path($folder), $fileName);
+
+                // Ruta relativa pública
+                $path = $folder . '/' . $fileName;
+            }
+
+            //$path = $request->file('image')->store('qr_images', 'public');
 
             $qrImage = QrImage::create([
                 'description' => $request->description,

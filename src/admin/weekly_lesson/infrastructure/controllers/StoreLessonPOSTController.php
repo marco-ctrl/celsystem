@@ -16,13 +16,33 @@ final class StoreLessonPOSTController
             // Manejar la subida del archivo
             $pdfUrl = null;
             if ($request->hasFile('file')) {
+
                 $file = $request->file('file');
-                $tema = str_replace(' ', '_', $request->tema); // Reemplazar espacios por guiones bajos
-                $date = now()->format('Ymd'); // Formato de fecha AAAAMMDD
+
+                // Quitar espacios del nombre del tema
+                $tema = str_replace(' ', '_', $request->tema);
+
+                // Fecha AAAAMMDD
+                $date = now()->format('Ymd');
+
+                // Nombre final del archivo
                 $fileName = "{$tema}_{$date}." . $file->getClientOriginalExtension();
-                $filePath = $file->storeAs('public/lecciones', $fileName);
-                $pdfUrl = Storage::url($filePath);
+
+                // Carpeta destino en /public
+                $folder = 'lecciones';
+
+                // Crear carpeta si no existe
+                if (!file_exists(public_path($folder))) {
+                    mkdir(public_path($folder), 0775, true);
+                }
+
+                // Ruta física donde se guardará el archivo
+                $file->move(public_path($folder), $fileName);
+
+                // URL pública que guardarás en BD
+                $pdfUrl = $folder . '/' . $fileName;
             }
+
 
             // Guardar la URL en la base de datos
             $lesson = new WeeklyLesson();

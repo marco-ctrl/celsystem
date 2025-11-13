@@ -77,7 +77,9 @@
                 </tr>
                 <tr>
                     <td><strong>Nombre:</strong> {{ $report->name_celula }}</td>
-                    <td rowspan="5"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path($report->photo))) }}" width="200" alt="logo" /></td>
+                    
+
+                    <td rowspan="5"><img src="data:image/png;base64, {{ base64_encode(file_get_contents(public_path($report->photo))) }}" width="200" alt="logo" /></td>
                 </tr>
                 <tr>
                     <td><strong>Número:</strong> {{ $report->celula->number }}</td>
@@ -93,7 +95,7 @@
                 </tr>
             </table>
         </section>
-        
+
         <section class="data-section">
             <table>
                 <tr>

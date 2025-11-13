@@ -14,7 +14,7 @@ final class ShowCelulaGETController extends Controller
         try {
 
             $data = Celula::with('lider')
-            ->where('lider_id', auth()->user()->id)
+            ->where('lider_id', auth()->user()->lider->id)
             ->first();
 
             return response()->json([

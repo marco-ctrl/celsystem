@@ -25,16 +25,47 @@ final class StoreInformePOSTController
             // Manejar la subida del archivo
             $photoUrl = null;
             $voucherUrl = null;
+
             if ($request->hasFile('photo')) {
                 $file = $request->file('photo');
-                $filePath = $file->store('public/photos_informe/' . now()->format('Y-m-d'));
-                $photoUrl = Storage::url($filePath);
+
+                // Carpeta con fecha dentro de /public/photos_informe
+                $folder = 'images/informe/' . now()->format('Y-m-d');
+
+                // Crear carpeta si no existe
+                if (!file_exists(public_path($folder))) {
+                    mkdir(public_path($folder), 0775, true);
+                }
+
+                // Nombre único
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                // Ruta física
+                $file->move(public_path($folder), $fileName);
+
+                // Ruta pública que guardarás en la BD
+                $photoUrl = $folder . '/' . $fileName;
             }
 
-            if ($request->hasFile('voucher')){
+            if ($request->hasFile('voucher')) {
                 $file = $request->file('voucher');
-                $filePath = $file->store('public/voucher_informe' . now()->format('Y-m-d'));
-                $voucherUrl = Storage::url($filePath);
+
+                // Carpeta con fecha dentro de /public/voucher_informe
+                $folder = 'images/comprobante/' . now()->format('Y-m-d');
+
+                // Crear carpeta si no existe
+                if (!file_exists(public_path($folder))) {
+                    mkdir(public_path($folder), 0775, true);
+                }
+
+                // Nombre único
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                // Ruta física
+                $file->move(public_path($folder), $fileName);
+
+                // Ruta pública que guardarás en la BD
+                $voucherUrl = $folder . '/' . $fileName;
             }
 
             // Crear un nuevo registro de informe
@@ -53,7 +84,7 @@ final class StoreInformePOSTController
                 'length' => $request->input('length'),
                 'status' => 1,
                 'address' => mb_strtoupper($request->input('addres'), 'UTF-8'),
-                
+
             ]);
 
             // Manejar asistentes

@@ -20,8 +20,10 @@ final class InformeGETController extends Controller
         $dompdf->render();
 
         // Devolver el PDF como una respuesta
-        return response($dompdf->output(), 200)
+        /*return response($dompdf->output(), 200)
             ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'inline; filename="informe.pdf"');
+            ->header('Content-Disposition', 'inline; filename="informe.pdf"');*/
+
+        return view('pdf.informe', compact('report'));
     }
 }

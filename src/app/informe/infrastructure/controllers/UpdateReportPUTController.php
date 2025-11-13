@@ -29,18 +29,29 @@ final class UpdateReportPUTController extends Controller
 
             if ($request->hasFile('photo')) {
 
-                // Verifica si $photoUrl no es nulo
-                if ($photoUrl !== null) {
-                    // Obtén la ruta relativa del archivo desde la URL
-                    $filePath = str_replace('/storage', 'public', parse_url($photoUrl, PHP_URL_PATH));
-
-                    // Elimina el archivo del almacenamiento
-                    Storage::delete($filePath);
+                // Eliminar la imagen anterior si existe
+                if (!empty($photoUrl) && file_exists(public_path($photoUrl))) {
+                    unlink(public_path($photoUrl));
                 }
 
                 $file = $request->file('photo');
-                $filePath = $file->store('public/photos_informe/' . now()->format('Y-m-d'));
-                $photoUrl = Storage::url($filePath);
+
+                // Carpeta con fecha dentro de /public/photos_informe
+                $folder = 'images/informe/' . now()->format('Y-m-d');
+
+                // Crear carpeta si no existe
+                if (!file_exists(public_path($folder))) {
+                    mkdir(public_path($folder), 0775, true);
+                }
+
+                // Nombre único
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                // Mover archivo a public/
+                $file->move(public_path($folder), $fileName);
+
+                // Nueva URL relativa que se guarda en la BD
+                $photoUrl = $folder . '/' . $fileName;
             }
 
             // Crear un nuevo registro de informe
